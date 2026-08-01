@@ -217,13 +217,13 @@ section{ position: relative; z-index: 3; }
 /* ---------- Our Story: orbiting memory deck ---------- */
 .story-deck{ position:relative; max-width: 640px; margin: 0 auto; }
 .deck-stage{
-  position: relative; height: 420px; margin: 0 auto; touch-action: pan-y;
+  position: relative; height: 480px; margin: 0 auto; touch-action: pan-y;
 }
-@media(max-width:600px){ .deck-stage{ height: 460px; } }
+@media(max-width:600px){ .deck-stage{ height: 560px; } }
 
 .deck-card{
   position:absolute; inset:0; padding: 38px 34px; display:flex; flex-direction:column; justify-content:center;
-  cursor: grab; user-select:none;
+  cursor: grab; user-select:none; overflow-y:auto;
   transition: transform .6s var(--ease), opacity .55s var(--ease), filter .55s ease;
   will-change: transform, opacity;
 }
@@ -235,11 +235,11 @@ section{ position: relative; z-index: 3; }
 .deck-card .deck-icon{
   width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   background: radial-gradient(circle at 35% 30%, var(--aurora-2), var(--aurora) 60%, transparent 100%);
-  box-shadow: 0 0 30px rgba(138,107,255,.5); font-size:1.05rem; margin-bottom: 20px;
+  box-shadow: 0 0 30px rgba(138,107,255,.5); font-size:1.05rem; margin-bottom: 20px; flex-shrink:0;
 }
-.deck-card .date{ font-family: var(--font-mono); font-size:.72rem; color: var(--rose-gold); letter-spacing:.14em; text-transform:uppercase; }
-.deck-card h3{ font-family: var(--font-display); margin-top:10px; font-size: clamp(1.2rem,3vw,1.55rem); font-weight:600; }
-.deck-card p{ margin-top:12px; color: var(--starlight-dim); font-size: clamp(.9rem,2vw,1rem); font-weight:300; line-height:1.65; max-width: 46ch; }
+.deck-card .date{ font-family: var(--font-mono); font-size:.72rem; color: var(--rose-gold); letter-spacing:.14em; text-transform:uppercase; flex-shrink:0; }
+.deck-card h3{ font-family: var(--font-display); margin-top:10px; font-size: clamp(1.2rem,3vw,1.55rem); font-weight:600; flex-shrink:0; }
+.deck-card p{ margin-top:12px; color: var(--starlight-dim); font-size: clamp(.88rem,2vw,1rem); font-weight:300; line-height:1.65; max-width: 50ch; }
 
 .deck-card[data-state="active"]{ transform: translateX(0) scale(1) rotate(0deg); opacity:1; z-index:5; filter:none; }
 .deck-card[data-state="prev"]{ transform: translateX(-46px) translateY(10px) scale(.9) rotate(-6deg); opacity:.45; z-index:4; filter: blur(.5px); }
@@ -535,9 +535,9 @@ const CONTENT = {
   story: [
     { icon: "fa-people-arrows", date: "The First Meeting", title: "The moment you became real", text: "Every version of you I'd imagined disappeared the second I actually saw you smile." },
     { icon: "fa-face-smile", date: "The First Smile", title: "A smile I now know by heart", text: "It's the reason I still find excuses to say something ridiculous just to see it again." },
-    { icon: "fa-gift", date: "The First Surprise", title: "When you caught me off guard", text: "Replace this with the moment you did something that completely surprised me." },
-    { icon: "fa-star", date: "The Favorite Memory", title: "The one I replay the most", text: "Replace this with the memory that means the most to both of us." },
-    { icon: "fa-sun", date: "The Best Day Together", title: "A day I'd relive on loop", text: "Describe the day that still makes you both smile when you think about it." }
+    { icon: "fa-gift", date: "The First Surprise", title: "When you caught me off guard", text: "The biggest surprise wasn't the earrings - it was the first video you sent me after receiving them. The happiness on your face said everything. Every second of that video is so close to my heart, and even today, whenever I'm having a bad day, I watch it. Somehow, it always manages to make me smile. ❤️" },
+    { icon: "fa-star", date: "The Favorite Memory", title: "The one I replay the most", text: "The Mussoorie trip will always be one of my favorite memories - shivering in the cold, spotting that beautiful rainbow, and soaking in the most breathtaking views. Somehow, we lived a hundred moments in just one day, and every single one was perfect because it was with you. ❤️" },
+    { icon: "fa-sun", date: "The Best Day Together", title: "A day I'd relive on loop", text: "I'll never forget the first time I saw you walking out of your college. My God... you looked so unbelievably beautiful that I just stood there thinking, \"How can someone be this gorgeous?\" I was completely smitten in that moment. And then came that little side hug - it lasted only a few seconds, but it's a memory I'll hold onto forever. ❤️" }
   ],
 
   // GALLERY — put your image files in an "images" folder next to this HTML file.
