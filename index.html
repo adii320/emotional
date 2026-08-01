@@ -542,13 +542,13 @@ const CONTENT = {
   ],
 
   // GALLERY — put your image files in an "images" folder next to this HTML file.
-  // Name them exactly photo1.jpg, photo2.jpg, photo3.jpg ... (jpg, png, or webp all work,
-  // just make sure the extension below matches the actual file).
+  // Name them photo1, photo2, photo3 ... (the number only — no need to worry about
+  // .jpg vs .JPG vs .jpeg vs .png, the page automatically tries all common variants).
   // Folder layout on GitHub should look like:
   //   your-repo/
   //     index.html          <- this file
   //     images/
-  //       photo1.jpg
+  //       photo1.jpg  (or photo1.JPG / photo1.jpeg / photo1.png / photo1.webp — any works)
   //       photo2.jpg
   //       photo3.jpg
   //       photo4.jpg
@@ -556,12 +556,12 @@ const CONTENT = {
   //       photo6.jpg
   // If a photo file is missing, that card simply falls back to a soft placeholder — nothing breaks.
   gallery: [
-    { img: "images/photo1.jpg", label: "Our first photo together", ratio: "4/5" },
-    { img: "images/photo2.jpg", label: "That trip we still talk about", ratio: "1/1" },
-    { img: "images/photo3.jpg", label: "The candid one you hate but I love", ratio: "3/4" },
-    { img: "images/photo4.jpg", label: "A random Tuesday that felt important", ratio: "4/5" },
-    { img: "images/photo5.jpg", label: "The photo that's my lock screen", ratio: "1/1" },
-    { img: "images/photo6.jpg", label: "Us, being ridiculous", ratio: "3/4" }
+    { img: "images/photo1", label: "Our first photo together", ratio: "4/5" },
+    { img: "images/photo2", label: "That trip we still talk about", ratio: "1/1" },
+    { img: "images/photo3", label: "The candid one you hate but I love", ratio: "3/4" },
+    { img: "images/photo4", label: "A random Tuesday that felt important", ratio: "4/5" },
+    { img: "images/photo5", label: "The photo that's my lock screen", ratio: "1/1" },
+    { img: "images/photo6", label: "Us, being ridiculous", ratio: "3/4" }
   ],
 
   reasons: [
@@ -617,6 +617,21 @@ Happy National Girlfriend Day. I love you more than this page could ever hold.`,
      APP LOGIC — no need to edit below this line.
      ============================================================ -->
 <script>
+// Global helper: if an image fails to load, automatically try other common
+// extensions (jpg/JPG/jpeg/JPEG/png/PNG/webp/WEBP) before giving up and
+// falling back to the placeholder. This means file naming (case or format)
+// never breaks the gallery.
+const IMG_EXT_FALLBACKS = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
+function handleGalleryImgError(img) {
+  const next = (parseInt(img.dataset.extIndex || '0', 10)) + 1;
+  if (next < IMG_EXT_FALLBACKS.length) {
+    img.dataset.extIndex = String(next);
+    img.src = `${img.dataset.base}.${IMG_EXT_FALLBACKS[next]}`;
+  } else {
+    img.style.display = 'none';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- inject content ---------- */
@@ -701,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el.className = 'gallery-item reveal';
     el.innerHTML = `
       <div class="frame" style="--ar:${g.ratio}" data-label="${g.label}">
-        <img src="${g.img}" alt="${g.label}" loading="lazy" onerror="this.style.display='none'">
+        <img src="${g.img}.${IMG_EXT_FALLBACKS[0]}" data-base="${g.img}" data-ext-index="0" alt="${g.label}" loading="lazy" onerror="handleGalleryImgError(this)">
         <i class="fa-regular fa-image"></i>
         <div class="overlay"><span>${g.label}</span></div>
       </div>`;
